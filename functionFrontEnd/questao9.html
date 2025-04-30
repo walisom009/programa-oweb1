@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificar Número Primo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+        }
+        .container {
+            max-width: 400px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label, input {
+            display: block;
+            margin-bottom: 15px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .primo {
+            color: green;
+        }
+        .nao-primo {
+            color: red;
+        }
+        .invalido {
+            color: darkred;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Verificar Número Primo</h2>
+    
+    <!-- Campo para o usuário digitar um número -->
+    <label for="inputNumero">Digite um número:</label>
+    <input type="number" id="inputNumero" placeholder="Ex: 7">
+
+    <!-- Botão que aciona a verificação -->
+    <button onclick="verificarPrimo()">É Primo?</button>
+
+    <!-- Resultado será exibido aqui -->
+    <div id="resultado"></div>
+</div>
+
+<script>
+    /**
+     * Função principal - verifica se um número é primo.
+     * 
+     * Um número é considerado primo se:
+     * - For maior ou igual a 2
+     * - Não for divisível por nenhum número inteiro entre 2 e √n
+     * 
+     * Retorna:
+     * - true se for primo
+     * - false se não for primo ou entrada inválida
+     */
+    function encontrarNumeroPrimo(numero) {
+        // Verifica se o valor é um número válido e maior ou igual a 2
+        if (typeof numero !== 'number' || numero < 2) {
+            return false;
+        }
+
+        // Verifica divisibilidade de 2 até a raiz quadrada do número
+        for (let i = 2; i <= Math.sqrt(numero); i++) {
+            if (numero % i === 0) {
+                return false; // Achou divisor → não é primo
+            }
+        }
+
+        return true; // Não encontrou divisores → é primo
+    }
+
+    /**
+     * Função chamada ao clicar no botão.
+     * - Pega o número digitado pelo usuário
+     - Chama a função de verificação
+     - Exibe o resultado na tela com estilo adequado
+     */
+    function verificarPrimo() {
+        const input = document.getElementById('inputNumero').value;
+        const numero = parseFloat(input); // converte texto em número
+        const resultadoDiv = document.getElementById('resultado');
+
+        // Limpa estilos anteriores
+        resultadoDiv.className = '';
+
+        // Valida se é um número válido
+        if (isNaN(numero)) {
+            resultadoDiv.textContent = 'Por favor, digite um número válido.';
+            resultadoDiv.classList.add('invalido');
+            return;
+        }
+
+        // Chama a função principal
+        const ehPrimo = encontrarNumeroPrimo(numero);
+
+        // Mostra o resultado com estilo diferente para cada caso
+        if (ehPrimo) {
+            resultadoDiv.textContent = `${numero} é um número primo.`;
+            resultadoDiv.classList.add('primo');
+        } else if (numero >= 2) {
+            resultadoDiv.textContent = `${numero} NÃO é um número primo.`;
+            resultadoDiv.classList.add('nao-primo');
+        } else {
+            resultadoDiv.textContent = `Número inválido para verificação de primo.`;
+            resultadoDiv.classList.add('invalido');
+        }
+    }
+</script>
+
+</body>
+</html>

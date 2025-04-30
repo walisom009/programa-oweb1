@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <script>
+        function categorizarProduto(preco) {
+    if (typeof preco !== 'number' || preco < 0) {
+        return 'Preço inválido';
+    }
+    if (preco < 50) return 'Econômico';
+    if (preco <= 100) return 'Intermediário';
+    return 'Premium';
+}
+
+console.log(categorizarProduto(45));  
+console.log(categorizarProduto(75));  
+console.log(categorizarProduto(150));
+    </script>
+</body>
+</html>

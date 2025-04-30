@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <script>
+function verificarMaioridade(idade) {
+    if (typeof idade !== 'number' || idade < 0) {
+        return 'Idade inválida';
+    }
+    return idade >= 18 ? 'Maior de idade' : 'Menor de idade';
+}
+
+console.log(verificarMaioridade(15)); 
+console.log(verificarMaioridade(20)); 
+    </script>
+</body>
+</html>

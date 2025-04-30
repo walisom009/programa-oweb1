@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcular Média</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Calcular Média</h2>
+    
+    <!-- Campo para inserir os números em formato de texto -->
+    <label for="inputNumeros">Digite os números separados por vírgula:</label>
+    <input type="text" id="inputNumeros" placeholder="Ex: 10, 8, 7">
+
+    <button onclick="executarCalculo()">Calcular Média</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+    /**
+     * Função que calcula a média dos números válidos de um array.
+     * - Ignora elementos que não são números.
+     * - Retorna 0 se:
+     *   - Não for um array,
+     *   - For um array vazio,
+     *   - Todos os elementos forem inválidos.
+     */
+    function calcularMedia(numeros) {
+        if (!Array.isArray(numeros) || numeros.length === 0) {
+            return 0;
+        }
+
+        // Filtra apenas os elementos que são números
+        const validos = numeros.filter(n => typeof n === 'number');
+
+        // Soma todos os números válidos
+        const soma = validos.reduce((acc, val) => acc + val, 0);
+
+        // Calcula a média, se houver números válidos
+        return validos.length > 0 ? soma / validos.length : 0;
+    }
+
+    /**
+     * Função chamada ao clicar no botão.
+     * - Pega o valor do input e converte em array de números.
+     * - Chama a função calcularMedia().
+     * - Exibe o resultado na tela.
+     */
+    function executarCalculo() {
+        const inputTexto = document.getElementById("inputNumeros").value;
+
+        try {
+            // Converte o texto em array usando JSON.parse
+            // Isso permite que o usuário digite [10, 8, 7] ou similar
+            const arrayEntrada = JSON.parse(inputTexto);
+
+            // Chama a função calcularMedia passando o array convertido
+            const media = calcularMedia(arrayEntrada);
+
+            // Mostra o resultado formatado
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.textContent = "Média calculada: " + media.toFixed(2);
+            resultadoDiv.style.color = media !== 0 ? "green" : "red";
+        } catch (e) {
+            // Se a entrada não for um array válido
+            document.getElementById("resultado").textContent = "Formato inválido! Use um array de números, como [10, 8, 7]";
+            document.getElementById("resultado").style.color = "red";
+        }
+    }
+</script>
+
+</body>
+</html>

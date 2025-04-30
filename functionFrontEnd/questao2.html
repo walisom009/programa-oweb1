@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificar Maioridade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 40px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            padding: 8px;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .valid {
+            color: green;
+        }
+        .invalid {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Verificar Maioridade</h2>
+
+    <label for="idade">Digite a idade:</label>
+    <input type="number" id="idade" placeholder="Ex: 18">
+
+    <button onclick="verificar()">Verificar</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+    function verificarMaioridade(idade) {
+        if (typeof idade !== 'number' || idade < 0) {
+            return 'Idade inválida';
+        }
+        return idade >= 18 ? 'Maior de idade' : 'Menor de idade';
+    }
+
+    function verificar() {
+        const input = document.getElementById('idade').value;
+        const idade = parseFloat(input);
+
+        const resultado = verificarMaioridade(idade);
+
+        const divResultado = document.getElementById('resultado');
+
+        if (resultado === 'Maior de idade') {
+            divResultado.textContent = resultado;
+            divResultado.className = 'valid';
+        } else if (resultado === 'Menor de idade') {
+            divResultado.textContent = resultado;
+            divResultado.className = 'invalid';
+        } else {
+            divResultado.textContent = resultado;
+            divResultado.className = 'invalid';
+        }
+    }
+</script>
+
+</body>
+</html>

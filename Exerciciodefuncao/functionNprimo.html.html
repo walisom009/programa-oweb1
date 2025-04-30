@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <script>
+        function encontrarNumeroPrimo(numero) {
+    if (typeof numero !== 'number' || numero < 2) {
+        return false;
+    }
+    for (let i = 2; i <= Math.sqrt(numero); i++) {
+        if (numero % i === 0) return false;
+    }
+    return true;
+}
+
+console.log(encontrarNumeroPrimo(7));
+console.log(encontrarNumeroPrimo(10));
+    </script>
+</body>
+</html>

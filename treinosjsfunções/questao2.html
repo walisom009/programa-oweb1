@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <script>
+        //faça um algoritmo que leia dois 
+        // //valores inteiros A e B, se os valores forem iguais devem 
+        // ser somados os dois valores, caso contrario , multiplique A por B, 
+        // o resultado deve ser exibido atribuido a uma variável C.
+        function calcularResultado(A, B) {
+  let C;
+  if (A === B) {
+    C = A + B;
+  } else {
+    C = A * B;
+  }
+  return C;
+}
+const A = 3;
+const B = 3; 
+const C = calcularResultado(A, B);
+console.log("O resultado é:", C);
+
+    </script>
+</body>
+</html>

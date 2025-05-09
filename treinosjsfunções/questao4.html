@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <script>
+        //Faça um algoritmo que some o numero anterior, o seu e o posterior da chamada e mostre o resultadomda soma e média.
+        function calcularSomaEMedia(num) {
+  const anterior = num - 1;
+  const posterior = num + 1;
+  const soma = anterior + num + posterior;
+  const media = soma / 3;
+  console.log(`Soma dos números: ${soma}`);
+  console.log(`Média dos números: ${media.toFixed(2)}`);
+}
+const numero = 5;
+calcularSomaEMedia(numero);
+    </script>
+</body>
+</html>

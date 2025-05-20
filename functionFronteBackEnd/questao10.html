@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Contar Vogais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 40px;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label, input {
+            display: block;
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .valido {
+            color: green;
+        }
+        .invalido {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Contar Vogais em um Texto</h2>
+
+    <!-- Campo para inserir o texto -->
+    <label for="inputTexto">Digite seu texto:</label>
+    <input type="text" id="inputTexto" placeholder="Ex: May gosta de JavaScript">
+
+    <!-- Botão para acionar a contagem -->
+    <button onclick="executarContaVogais()">Contar Vogais</button>
+
+    <!-- Resultado será exibido aqui -->
+    <div id="resultado"></div>
+</div>
+
+<script>
+    /**
+     * Função principal - conta vogais em uma string.
+     * 
+     * Regra:
+     * - Aceita apenas strings válidas
+     * - Conta vogais maiúsculas e minúsculas (usando 'i' no regex)
+     * - Retorna número de vogais ou mensagem de erro
+     */
+    function contarVogais(texto) {
+        // Valida se a entrada é uma string
+        if (typeof texto !== 'string') {
+            return 'Entrada inválida';
+        }
+
+        // Usa expressão regular para encontrar todas as vogais (maiúsculas e minúsculas)
+        const vogais = texto.match(/[aeiou]/gi);
+
+        // Se encontrou vogais, retorna a quantidade, senão retorna zero
+        return vogais ? vogais.length : 0;
+    }
+
+    /**
+     * Função chamada ao clicar no botão.
+     * - Pega o texto digitado pelo usuário
+     * - Chama a função de contagem
+     * - Exibe o resultado na tela, com estilo adequado
+     */
+    function executarContaVogais() {
+        const input = document.getElementById('inputTexto').value;
+        const resultadoDiv = document.getElementById('resultado');
+
+        // Limpa estilos anteriores
+        resultadoDiv.className = '';
+
+        // Chama a função principal
+        const resultado = contarVogais(input);
+
+        // Mostra o resultado com estilo diferente para cada tipo
+        if (typeof resultado === 'number') {
+            resultadoDiv.textContent = `O texto possui ${resultado} vogal(is).`;
+            resultadoDiv.classList.add('valido');
+        } else {
+            resultadoDiv.textContent = resultado; // 'Entrada inválida'
+            resultadoDiv.classList.add('invalido');
+        }
+    }
+</script>
+
+</body>
+</html>

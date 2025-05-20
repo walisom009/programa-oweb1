@@ -1,0 +1,31 @@
+/* Geral */
+body {
+    font-family: 'Press Start 2P', cursive;
+    color: green;
+    background-color: white;
+    scroll-behavior: smooth;
+}
+
+.hero {
+    background: linear-gradient(120deg, #28a745, #3dc767);
+}
+
+/* Links */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Botões Animados */
+.btn-success:hover,
+.btn-outline-light:hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Imagens */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}

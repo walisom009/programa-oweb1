@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buscar Usuário por ID (Dados Fictícios)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    input[type="number"] {
+      padding: 8px;
+      width: 60px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 8px 15px;
+      margin-top: 10px;
+    }
+    #user-info {
+      margin-top: 20px;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+    .buttons {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Buscar Informações do Usuário</h2>
+  
+  <form id="user-form">
+    <label for="user-id">Digite o ID do usuário (1 a 45):</label><br><br>
+    <input type="number" id="user-id" name="user-id" min="1" max="45" required />
+    <button type="submit">Buscar</button>
+  </form>
+
+  <div class="buttons">
+    <button type="button" id="prev-btn">Anterior</button>
+    <button type="button" id="next-btn">Próximo</button>
+  </div>
+
+  <div id="user-info"></div>
+
+  <script>
+    const form = document.getElementById('user-form');
+    const userInfoDiv = document.getElementById('user-info');
+    const userIdInput = document.getElementById('user-id');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    let currentId = 1;
+
+    // Lista fictícia de 45 usuários
+    const usuarios = [
+      { id: 1, nome: "Ana Silva", email: "ana.silva@example.com", cidade: "São Paulo" },
+      { id: 2, nome: "Bruno Costa", email: "bruno.costa@example.com", cidade: "Rio de Janeiro" },
+      { id: 3, nome: "Carla Oliveira", email: "carla.oliveira@example.com", cidade: "Belo Horizonte" },
+      { id: 4, nome: "Diego Pereira", email: "diego.pereira@example.com", cidade: "Curitiba" },
+      { id: 5, nome: "Eduarda Lima", email: "eduarda.lima@example.com", cidade: "Salvador" },
+      { id: 6, nome: "Felipe Almeida", email: "felipe.almeida@example.com", cidade: "Porto Alegre" },
+      { id: 7, nome: "Gabriela Santos", email: "gabriela.santos@example.com", cidade: "Recife" },
+      { id: 8, nome: "Hugo Gomes", email: "hugo.gomes@example.com", cidade: "Fortaleza" },
+      { id: 9, nome: "Isabela Rocha", email: "isabela.rocha@example.com", cidade: "Brasília" },
+      { id: 10, nome: "João Ferreira", email: "joao.ferreira@example.com", cidade: "Maceió" },
+      { id: 11, nome: "Letícia Martins", email: "leticia.martins@example.com", cidade: "Campinas" },
+      { id: 12, nome: "Lucas Nascimento", email: "lucas.nascimento@example.com", cidade: "Goiânia" },
+      { id: 13, nome: "Marina Ribeiro", email: "marina.ribeiro@example.com", cidade: "Natal" },
+      { id: 14, nome: "Mateus Souza", email: "mateus.souza@example.com", cidade: "Florianópolis" },
+      { id: 15, nome: "Tatiane Cardoso", email: "tatiane.cardoso@example.com", cidade: "João Pessoa" },
+      { id: 16, nome: "Victor Barros", email: "victor.barros@example.com", cidade: "Aracaju" },
+      { id: 17, nome: "Amanda Dias", email: "amanda.dias@example.com", cidade: "Cuiabá" },
+      { id: 18, nome: "Daniel Castro", email: "daniel.castro@example.com", cidade: "Campo Grande" },
+      { id: 19, nome: "Fernanda Teixeira", email: "fernanda.teixeira@example.com", cidade: "Vitória" },
+      { id: 20, nome: "Guilherme Mendes", email: "guilherme.mendes@example.com", cidade: "Uberlândia" },
+      { id: 21, nome: "Juliana Azevedo", email: "juliana.azevedo@example.com", cidade: "Santarém" },
+      { id: 22, nome: "Leandro Lopes", email: "leandro.lopes@example.com", cidade: "Manaus" },
+      { id: 23, nome: "Patrícia Reis", email: "patricia.reis@example.com", cidade: "Belém" },
+      { id: 24, nome: "Rodrigo Pinto", email: "rodrigo.pinto@example.com", cidade: "Macapá" },
+      { id: 25, nome: "Simone Fernandes", email: "simone.fernandes@example.com", cidade: "Palmas" },
+      { id: 26, nome: "Thiago Ramos", email: "thiago.ramos@example.com", cidade: "Boa Vista" },
+      { id: 27, nome: "Vanessa Moreira", email: "vanessa.moreira@example.com", cidade: "Rio Branco" },
+      { id: 28, nome: "Wagner Batista", email: "wagner.batista@example.com", cidade: "Porto Velho" },
+      { id: 29, nome: "Camila Duarte", email: "camila.duarte@example.com", cidade: "Blumenau" },
+      { id: 30, nome: "André Luiz", email: "andre.luiz@example.com", cidade: "Joinville" },
+      { id: 31, nome: "Mariana Vieira", email: "mariana.vieira@example.com", cidade: "Ponta Grossa" },
+      { id: 32, nome: "Rafael Aquino", email: "rafael.aquino@example.com", cidade: "Londrina" },
+      { id: 33, nome: "Renata Borges", email: "renata.borges@example.com", cidade: "Caxias do Sul" },
+      { id: 34, nome: "Carlos Eduardo", email: "carlos.eduardo@example.com", cidade: "Pelotas" },
+      { id: 35, nome: "Jéssica Macedo", email: "jessica.macedo@example.com", cidade: "São José dos Pinhais" },
+      { id: 36, nome: "Paulo Henrique", email: "paulo.henrique@example.com", cidade: "São Vicente" },
+      { id: 37, nome: "Adriana Lima", email: "adriana.lima@example.com", cidade: "Sorocaba" },
+      { id: 38, nome: "Marcos Vinícius", email: "marcos.vinicius@example.com", cidade: "Jundiaí" },
+      { id: 39, nome: "Débora Monteiro", email: "debora.monteiro@example.com", cidade: "Presidente Prudente" },
+      { id: 40, nome: "Vinicius Araújo", email: "vinicius.araujo@example.com", cidade: "Franca" },
+      { id: 41, nome: "Tânia Souza", email: "tania.souza@example.com", cidade: "Itaquaquecetuba" },
+      { id: 42, nome: "Ricardo Cunha", email: "ricardo.cunha@example.com", cidade: "Osasco" },
+      { id: 43, nome: "Cristiane Freitas", email: "cristiane.freitas@example.com", cidade: "Diadema" },
+      { id: 44, nome: "Alex Sandro", email: "alex.sandro@example.com", cidade: "Santo André" },
+      { id: 45, nome: "Luciana Menezes", email: "luciana.menezes@example.com", cidade: "São Bernardo do Campo" }
+    ];
+
+    function mostrarUsuario(id) {
+      const usuario = usuarios.find(u => u.id === id);
+
+      if (!usuario) {
+        userInfoDiv.innerHTML = `<p class="error">Usuário com ID ${id} não encontrado.</p>`;
+        return;
+      }
+
+      userInfoDiv.innerHTML = `
+        <p class="success"><strong>Usuário Encontrado!</strong></p>
+        <p><strong>ID:</strong> ${usuario.id}</p>
+        <p><strong>Nome:</strong> ${usuario.nome}</p>
+        <p><strong>Email:</strong> ${usuario.email}</p>
+        <p><strong>Cidade:</strong> ${usuario.cidade}</p>
+      `;
+      userIdInput.value = id;
+      currentId = id;
+    }
+
+    // Evento do formulário
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const inputId = parseInt(userIdInput.value, 10);
+
+      if (isNaN(inputId) || inputId < 1 || inputId > 45) {
+        userInfoDiv.innerHTML = `<p class="error">Por favor, digite um ID válido entre 1 e 45.</p>`;
+        return;
+      }
+
+      mostrarUsuario(inputId);
+    });
+
+    // Botão Anterior
+    prevBtn.addEventListener('click', () => {
+      if (currentId > 1) {
+        mostrarUsuario(currentId - 1);
+      } else {
+        userInfoDiv.innerHTML = `<p class="error">Você está no primeiro usuário.</p>`;
+      }
+    });
+
+    // Botão Próximo
+    nextBtn.addEventListener('click', () => {
+      if (currentId < 45) {
+        mostrarUsuario(currentId + 1);
+      } else {
+        userInfoDiv.innerHTML = `<p class="error">Você está no último usuário.</p>`;
+      }
+    });
+
+    // Carregar o primeiro usuário ao abrir a página
+    mostrarUsuario(1);
+  </script>
+
+</body>
+</html>

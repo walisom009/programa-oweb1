@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Senhas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 40px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label, input, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Gerador de Senha</h2>
+    
+    <label for="comprimento">Comprimento da senha (mínimo 4):</label>
+    <input type="number" id="comprimento" placeholder="Ex: 10">
+
+    <button onclick="gerar()">Gerar Senha</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+    /**
+     * Função para gerar uma senha aleatória com:
+     * - Pelo menos uma letra maiúscula
+     * - Uma minúscula
+     * - Um número
+     * 
+     * @param {number} comprimento - Tamanho total da senha desejada
+     * @returns {string} - A senha gerada ou mensagem de erro
+     */
+    function gerarSenha(comprimento) {
+        // Validação do comprimento
+        if (typeof comprimento !== 'number' || comprimento < 4) {
+            return 'Comprimento inválido (mínimo de 4 caracteres)';
+        }
+
+        // Definição dos caracteres possíveis
+        const maiusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const minusculas = 'abcdefghijklmnopqrstuvwxyz';
+        const numeros = '0123456789';
+        const todos = maiusculas + minusculas + numeros;
+
+        // Garante pelo menos um caracter de cada tipo
+        let senha = [
+            maiusculas[Math.floor(Math.random() * maiusculas.length)],
+            minusculas[Math.floor(Math.random() * minusculas.length)],
+            numeros[Math.floor(Math.random() * numeros.length)]
+        ];
+
+        // Completa o restante da senha com caracteres aleatórios
+        for (let i = senha.length; i < comprimento; i++) {
+            senha.push(todos[Math.floor(Math.random() * todos.length)]);
+        }
+
+        // Embaralha os caracteres para evitar padrões
+        senha = senha.sort(() => 0.5 - Math.random());
+
+        // Retorna a senha como string
+        return senha.join('');
+    }
+
+    /**
+     * Função chamada ao clicar no botão "Gerar Senha"
+     * Pega o valor do campo de entrada e exibe a senha gerada
+     */
+    function gerar() {
+        const comprimentoInput = document.getElementById('comprimento').value;
+        const comprimento = parseInt(comprimentoInput);
+
+        const senha = gerarSenha(comprimento);
+
+        const resultadoDiv = document.getElementById('resultado');
+
+        if (senha.includes('inválido')) {
+            resultadoDiv.textContent = senha;
+            resultadoDiv.style.color = 'red';
+        } else {
+            resultadoDiv.textContent = `Senha gerada: ${senha}`;
+            resultadoDiv.style.color = 'green';
+        }
+    }
+</script>
+
+</body>
+</html>

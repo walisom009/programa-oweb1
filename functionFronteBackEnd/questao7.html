@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtrar Palavras por Comprimento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Filtrar Palavras pelo Tamanho</h2>
+    
+    <!-- Campo para inserir o array de palavras -->
+    <label for="inputPalavras">Digite as palavras em formato de array:</label>
+    <input type="text" id="inputPalavras" placeholder='Ex: ["sol", "mar", "montanha", "lua"]'>
+
+    <!-- Campo para inserir o comprimento mínimo -->
+    <label for="inputComprimento">Comprimento mínimo:</label>
+    <input type="number" id="inputComprimento" placeholder="Ex: 4">
+
+    <button onclick="executarFiltro()">Filtrar Palavras</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+    /**
+     * Função que filtra palavras com base no comprimento mínimo.
+     * - Aceita um array de palavras e um número como comprimento mínimo.
+     * - Retorna um novo array contendo apenas as palavras válidas (strings) com tamanho >= comprimentoMinimo.
+     * - Se os parâmetros forem inválidos, retorna 'Entrada inválida'.
+     */
+    function filtrarPalavras(palavras, comprimentoMinimo) {
+        if (!Array.isArray(palavras) || typeof comprimentoMinimo !== 'number') {
+            return 'Entrada inválida';
+        }
+
+        // Filtra somente strings com comprimento maior ou igual ao valor especificado
+        return palavras.filter(p => typeof p === 'string' && p.length >= comprimentoMinimo);
+    }
+
+    /**
+     * Função chamada ao clicar no botão.
+     * - Pega as entradas do usuário
+     * - Converte o texto em array com JSON.parse()
+     * - Chama a função filtrarPalavras()
+     * - Exibe o resultado na tela
+     */
+    function executarFiltro() {
+        const inputPalavras = document.getElementById('inputPalavras').value;
+        const inputComprimento = document.getElementById('inputComprimento').value;
+
+        try {
+            // Converte o texto em array de strings
+            const palavras = JSON.parse(inputPalavras);
+
+            // Converte o comprimento mínimo para número
+            const comprimentoMinimo = parseInt(inputComprimento);
+
+            // Executa a função principal
+            const resultado = filtrarPalavras(palavras, comprimentoMinimo);
+
+            // Mostra o resultado na página
+            const resultadoDiv = document.getElementById('resultado');
+
+            if (typeof resultado === 'string') {
+                // Caso tenha retornado mensagem de erro
+                resultadoDiv.textContent = resultado;
+                resultadoDiv.style.color = 'red';
+            } else {
+                // Caso tenha retornado um array
+                resultadoDiv.textContent = 'Palavras filtradas: ' + JSON.stringify(resultado);
+                resultadoDiv.style.color = 'green';
+            }
+
+        } catch (e) {
+            // Tratamento de erro caso o JSON esteja mal formatado
+            document.getElementById('resultado').textContent = 'Formato inválido! Use um array válido, como ["sol", "mar", "montanha", "lua"]';
+            document.getElementById('resultado').style.color = 'red';
+        }
+    }
+</script>
+
+</body>
+</html>
